@@ -31,7 +31,7 @@ class AddRestaurantController: UITableViewController, UIImagePickerControllerDel
     @IBAction func saveBtnTapped(sender: UIBarButtonItem) {
         let buffer = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext
         
-         let restaurant = NSEntityDescription.insertNewObjectForEntityForName("Restaurant", inManagedObjectContext: buffer!) as! Restaurant
+        let restaurant = NSEntityDescription.insertNewObjectForEntityForName("Restaurant", inManagedObjectContext: buffer!) as! Restaurant
         
         restaurant.name = name.text!
         restaurant.type = type.text!

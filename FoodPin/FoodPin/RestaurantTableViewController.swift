@@ -21,12 +21,18 @@ class RestaurantTableViewController: UITableViewController,NSFetchedResultsContr
    
     func searchFilter(textToSearch: String) {
         sr = restaurants.filter({ (r:Restaurant) -> Bool in
-//            return r.name.containsString(textToSearch) //&& r.location.containsString(textToSearch)
-            let nameMatch = r.name.rangeOfString(textToSearch, options: NSStringCompareOptions.CaseInsensitiveSearch)
-            let locationMatch = r.location.rangeOfString(textToSearch, options: NSStringCompareOptions.CaseInsensitiveSearch)
-            //
+//            let nameMatch = r.name.rangeOfString(textToSearch, options: NSStringCompareOptions.CaseInsensitiveSearch)
+//            let locationMatch = r.location.rangeOfString(textToSearch, options: NSStringCompareOptions.CaseInsensitiveSearch)
+//            return nameMatch != nil || locationMatch != nil
+            let name = NSMutableString(string: r.name) as CFMutableStringRef
+            CFStringTransform(name, nil, kCFStringTransformMandarinLatin, false)
+            CFStringTransform(name, nil, kCFStringTransformStripDiacritics, false)
             
-            return nameMatch != nil || locationMatch != nil
+            let location = NSMutableString(string: r.location) as CFMutableStringRef
+            CFStringTransform(location, nil, kCFStringTransformToLatin, false)
+            CFStringTransform(location, nil, kCFStringTransformStripDiacritics, false)
+            
+            return (String(name).containsString(textToSearch) || String(location).containsString(textToSearch))
         })
     }
     
